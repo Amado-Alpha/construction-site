@@ -1,11 +1,12 @@
 import HeroSection from "../components/HeroSection"
+import ProjectSpotlights from "../components/ProjectSpotLights";
 
 export function HomePage() {
     return (
         <>
         <HeroSection/>
         <div>
-            <p>Home page</p>
+            <ProjectSpotlights/>
         </div>
         </>
         

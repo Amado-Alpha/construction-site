@@ -104,7 +104,7 @@ export default function Navbar() {
                         {({ isActive }) => (
                           <motion.div
                             className={cn(
-                              "relative px-4 py-2 text-sm font-medium transition-all duration-300 cursor-pointer",
+                              "relative px-4 py-2 font-light transition-all duration-300 cursor-pointer",
                               isActive ? "text-white" : "text-white"
                             )}
                           >
