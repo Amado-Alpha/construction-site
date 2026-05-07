@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectCoverflow, Autoplay } from "swiper/modules";
 import designElementSVG from "@/assets/svgs/design-element.svg";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -52,14 +53,14 @@ export default function ProjectSpotlights() {
     <section className="relative bg-neutral-800 py-24 overflow-hidden">
         {/* Decorative SVG */}
         <div
-        className="absolute -top-30 -left-8 w-[180px] h-[220px] bg-no-repeat bg-contain z-10 pointer-events-none"
+        className="absolute -top-10 -left-0.05 w-[180px] h-[220px] bg-no-repeat bg-contain z-10 pointer-events-none"
         style={{
             backgroundImage: `url(${designElementSVG})`,
-            backgroundSize: "70%",
+            backgroundSize: "40%",
             backgroundPosition: "left top",
         }}
         />
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mt-12">
         {/* Heading */}
         <div className="mb-10">
           <h2 className="text-white text-4xl md:text-5xl md:ml-4 font-bold">
@@ -67,57 +68,74 @@ export default function ProjectSpotlights() {
           </h2>
         </div>
 
-        {/* Slider */}
-        <Swiper
+        {/* Slider Wrapper */}
+        <div className="relative">
+          {/* Prev Button */}
+          <button className="project-prev absolute left-2 md:-left-6 top-1/2 -translate-y-1/2 z-30 bg-white/10 hover:bg-lime-400 text-white  backdrop-blur-md border border-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300">
+            <ChevronLeft size={24} />
+          </button>
+
+          {/* Next Button */}
+          <button className="project-next absolute right-2 md:-right-6 top-1/2 -translate-y-1/2 z-30 bg-white/10 hover:bg-lime-400 text-white  backdrop-blur-md border border-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300">
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Swiper */}
+          <Swiper
             modules={[Navigation, Pagination, EffectCoverflow, Autoplay]}
             effect="coverflow"
             centeredSlides={true}
             slidesPerView={"auto"}
             loop={true}
-           
-            navigation
-            pagination={{ clickable: true }}
-          
+            speed={1000}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            navigation={{
+              prevEl: ".project-prev",
+              nextEl: ".project-next",
+            }}
             coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 180,
-                modifier: 1.5,
-                slideShadows: false,
-                scale: 0.85,
+              rotate: 0,
+              stretch: 0,
+              depth: 180,
+              modifier: 1.5,
+              slideShadows: false,
+              scale: 0.85,
             }}
             className="project-swiper !overflow-visible"
-            >
+          >
             {projects.map((project) => (
-            <SwiperSlide
+              <SwiperSlide
                 key={project.id}
                 className="!w-[85%] md:!w-[70%]"
-            >
-              <div className="relative overflow-hidden shadow-2xl rounded-lg">
-               
-                {/* Image */}
-                <div className="h-[260px] md:h-[420px]">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+              >
+                <div className="relative overflow-hidden shadow-2xl rounded-lg">
+                  {/* Image */}
+                  <div className="h-[260px] md:h-[420px]">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
-                {/* Content Overlay */}
-                <div className="absolute bottom-0 left-0 w-full bg-[#2B469F]/95 border-l-4 border-b-4 border-l-lime-400 border-b-lime-400 px-6 py-5">
-                  <h3 className="text-white text-xl md:text-3xl font-bold leading-tight">
-                    {project.title}
-                  </h3>
+                  {/* Content Overlay */}
+                  <div className="absolute bottom-0 left-0 w-full bg-[#2B469F]/95 border-l-4 border-b-4 border-l-lime-400 border-b-lime-400 px-6 py-5">
+                    <h3 className="text-white text-xl md:text-3xl font-bold leading-tight">
+                      {project.title}
+                    </h3>
 
-                  <p className="text-white/90 text-sm md:text-base mt-2">
-                    {project.location}
-                  </p>
+                    <p className="text-white/90 text-sm md:text-base mt-2">
+                      {project.location}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       {/* Custom Styles */}
@@ -139,20 +157,6 @@ export default function ProjectSpotlights() {
           transform: scale(1);
         }
 
-        .project-swiper .swiper-button-next,
-        .project-swiper .swiper-button-prev {
-          color: white;
-          background: #16a34a;
-          width: 42px;
-          height: 42px;
-        }
-
-        .project-swiper .swiper-button-next::after,
-        .project-swiper .swiper-button-prev::after {
-          font-size: 16px;
-          font-weight: bold;
-        }
-
         .project-swiper .swiper-pagination {
           bottom: 0px !important;
         }
@@ -162,10 +166,12 @@ export default function ProjectSpotlights() {
           height: 4px;
           border-radius: 9999px;
           background: rgba(255,255,255,0.4);
+          transition: all 0.3s ease;
         }
 
         .project-swiper .swiper-pagination-bullet-active {
           background: #84cc16;
+          width: 70px;
         }
       `}</style>
     </section>
