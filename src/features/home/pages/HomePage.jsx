@@ -7,7 +7,7 @@ export function HomePage() {
     return (
         <>
         <HeroSection/>
-        <div className="">
+        <div className="overflow-hidden">
             <AboutSection/>
             <ProjectSpotlights/>
             <Testimonials/>
