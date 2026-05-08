@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { 
   HardHat, 
   Mail, 
   Phone, 
   MapPin,
-  Building2,
   ArrowLeft,
   Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom"; // or use next/link if using Next.js
+import { Link } from "react-router-dom";
 import logo from "@/assets/svgs/home-dark.svg";
 
 export default function UnderDevelopmentPage() {
@@ -19,7 +17,6 @@ export default function UnderDevelopmentPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNotify = () => {
-    e.preventDefault();
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
@@ -28,13 +25,13 @@ export default function UnderDevelopmentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white flex flex-col">
+    <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col">
       
       {/* Simple Header with Back Button */}
-      <header className="py-6 px-4 border-b border-neutral-800">
+      <header className="py-6 px-4 border-b border-gray-300 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={logo} className="h-8 w-auto filter brightness-0 invert" alt="Logo"/>
+            <img src={logo} className="h-8 w-auto" alt="Logo"/>
           </div>
           
           {/* Back to Home Button */}
@@ -42,7 +39,7 @@ export default function UnderDevelopmentPage() {
             <Button 
               variant="ghost" 
               size="sm"
-              className="text-neutral-400 hover:text-brand hover:bg-neutral-800"
+              className="text-gray-600 hover:text-brand hover:bg-gray-100"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Home
@@ -61,7 +58,7 @@ export default function UnderDevelopmentPage() {
           </div>
 
           {/* Title */}
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-gray-900">
             Under Construction
           </h1>
           
@@ -69,7 +66,7 @@ export default function UnderDevelopmentPage() {
           <div className="w-20 h-1 bg-brand mx-auto mb-6" />
 
           {/* Message */}
-          <p className="text-neutral-400 text-lg mb-8 max-w-md mx-auto">
+          <p className="text-gray-600 text-lg mb-8 max-w-md mx-auto">
             We're building something amazing. Our new website is coming soon.
           </p>
 
@@ -80,16 +77,16 @@ export default function UnderDevelopmentPage() {
               { label: "Projects", value: "500+" },
               { label: "Clients", value: "1000+" }
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
+              <div key={stat.label} className="text-center bg-white rounded-lg p-3 shadow-sm">
                 <div className="text-brand font-bold text-xl">{stat.value}</div>
-                <div className="text-neutral-500 text-xs">{stat.label}</div>
+                <div className="text-gray-500 text-xs">{stat.label}</div>
               </div>
             ))}
           </div>
 
           {/* Notify Form */}
-          <div className="bg-neutral-800/50 rounded-lg p-6 max-w-md mx-auto">
-            <p className="text-sm text-neutral-300 mb-4">
+          <div className="bg-white rounded-lg p-6 max-w-md mx-auto shadow-md border border-gray-100">
+            <p className="text-sm text-gray-700 mb-4 font-medium">
               Get notified when we launch
             </p>
             <form onSubmit={handleNotify} className="flex gap-2">
@@ -99,12 +96,12 @@ export default function UnderDevelopmentPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="flex-1 h-11 bg-neutral-900 border-neutral-700 text-white placeholder:text-neutral-500"
+                className="flex-1 h-11 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
               />
               <Button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="bg-brand hover:bg-brand/70 h-11 px-6"
+                className="bg-brand hover:bg-brand/70 h-11 px-6 text-white"
               >
                 {isSubmitting ? "..." : "Notify Me"}
               </Button>
@@ -116,7 +113,7 @@ export default function UnderDevelopmentPage() {
             <Link to="/">
               <Button 
                 variant="outline"
-                className="border-neutral-700 bg-brand text-neutral-300 hover:bg-brand/70 hover:border-brand/70 hover:text-white"
+                className="border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400"
               >
                 <Home className="h-4 w-4 mr-2" />
                 Return to Homepage
@@ -125,7 +122,7 @@ export default function UnderDevelopmentPage() {
           </div>
 
           {/* Contact Info */}
-          <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col sm:flex-row justify-center gap-6 text-sm text-neutral-500">
+          <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-center gap-6 text-sm text-gray-500">
             <div className="flex items-center justify-center gap-2">
               <Phone className="h-4 w-4" />
               <span>(555) 123-4567</span>
@@ -143,7 +140,7 @@ export default function UnderDevelopmentPage() {
       </main>
 
       {/* Simple Footer */}
-      <footer className="py-6 text-center text-neutral-600 text-sm border-t border-neutral-800">
+      <footer className="py-6 text-center text-gray-500 text-sm border-t border-gray-200 bg-white/30">
         <p>© {new Date().getFullYear()} Construction Co. All rights reserved.</p>
       </footer>
     </div>

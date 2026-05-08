@@ -53,7 +53,6 @@ export default function Footer() {
   return (
     <footer className="relative bg-neutral-900 text-white">
       {/* Top accent bar */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-brand to-brand/60" />
       
       <div className="max-w-7xl mx-auto px-4 py-12">
         

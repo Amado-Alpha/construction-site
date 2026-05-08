@@ -36,31 +36,66 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHeroSection, setIsHeroSection] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      
+      // Check if we're in hero section (first 100vh or specific height)
+      const heroSectionHeight = window.innerHeight;
+      const isInHero = currentScrollY < heroSectionHeight;
+      setIsHeroSection(isInHero);
+      
+      // Handle navbar visibility on scroll
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down - hide navbar
+        setIsVisible(false);
+      } else {
+        // Scrolling up - show navbar
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
+
+  // Determine navbar background
+  const getNavbarBackground = () => {
+    if (isHeroSection && !isVisible) return "bg-transparent";
+    if (isHeroSection && isVisible) return "bg-transparent";
+    if (!isHeroSection && isVisible) return "bg-white shadow-md";
+    return "bg-transparent";
+  };
+
+  // Determine text color
+  const getTextColor = () => {
+    if (isHeroSection) return "text-white";
+    if (!isHeroSection && isVisible) return "text-gray-800";
+    return "text-white";
+  };
 
   return (
     <motion.header 
       className={cn(
-        "w-full fixed top-0 left-0 z-50 transition-all duration-300 py-4",
-        scrolled ? "px-4" : "px-2"
+        "w-full fixed top-0 left-0 z-50 transition-all duration-300",
+        getNavbarBackground()
       )}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      animate={{ 
+        y: isVisible ? 0 : -100 
+      }}
+      transition={{ duration: 0.3 }}
     >
       <div className="max-w-5xl mx-auto px-4">
         <div className={cn(
-          "bg-transparent flex items-center justify-between transition-all duration-300",
-          scrolled ? "px-4 py-2" : "px-6 py-3"
+          "flex items-center justify-between transition-all duration-300 py-4",
+          !isHeroSection && isVisible ? "px-4" : "px-6"
         )}>
           
           {/* Logo */}
@@ -82,7 +117,7 @@ export default function Navbar() {
                   <NavigationMenuItem key={item.label}>
                     {item.dropdown ? (
                       <>
-                        <NavigationMenuTrigger className="text-white">
+                        <NavigationMenuTrigger className={getTextColor()}>
                           {item.label}
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
@@ -102,23 +137,19 @@ export default function Navbar() {
                     ) : (
                       <NavLink to={item.href || "/"}>
                         {({ isActive }) => (
-                          <motion.div
+                          <div
                             className={cn(
                               "relative px-4 py-2 font-light transition-all duration-300 cursor-pointer",
-                              isActive ? "text-white" : "text-white"
+                              isActive ? getTextColor() : getTextColor()
                             )}
                           >
                             {item.label}
                             {isActive && (
-                              <motion.span
-                                layoutId="active-underline"
-                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand via-brand to-brand rounded-full"
-                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                              >
-                                <span className="absolute inset-0 blur-sm bg-gradient-to-r from-brand via-brand to-brand rounded-full" />
-                              </motion.span>
+                              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand to-brand rounded-full">
+                                <span className="absolute inset-0 blur-sm bg-gradient-to-r from-brand to-brand rounded-full" />
+                              </span>
                             )}
-                          </motion.div>
+                          </div>
                         )}
                       </NavLink>
                     )}
@@ -132,13 +163,17 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <Button 
               variant="default"
-              className="bg-gradient-to-r from-brand to-brand hover:from-brand hover:to-brand text-white"
+              className={cn(
+                "bg-gradient-to-r from-brand to-brand hover:from-brand hover:to-brand",
+                !isHeroSection && isVisible && "shadow-sm"
+              )}
               asChild
             >
               <NavLink to="/get-quote">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  className={!isHeroSection && isVisible ? "text-white" : "text-white"}
                 >
                   Get Quote
                 </motion.div>
@@ -149,7 +184,7 @@ export default function Navbar() {
           {/* Mobile Menu Trigger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden text-white">
+              <Button variant="ghost" size="icon" className={cn("md:hidden", getTextColor())}>
                 <Menu className="h-6! w-6!" />
               </Button>
             </SheetTrigger>
@@ -178,13 +213,9 @@ export default function Navbar() {
                           >
                             {item.label}
                             {isActive && (
-                              <motion.span
-                                layoutId="mobile-active"
-                                className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-brand to-brand rounded-full"
-                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                              >
+                              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-brand to-brand rounded-full">
                                 <span className="absolute inset-0 blur-sm bg-gradient-to-b from-brand to-brand rounded-full" />
-                              </motion.span>
+                              </span>
                             )}
                           </div>
                         )}

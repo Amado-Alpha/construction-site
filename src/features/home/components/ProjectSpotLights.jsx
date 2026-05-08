@@ -50,7 +50,7 @@ const projects = [
 
 export default function ProjectSpotlights() {
   return (
-    <section className="relative bg-neutral-800 py-24 overflow-hidden">
+    <section className="relative bg-brand/10 py-16 overflow-hidden">
         {/* Decorative SVG */}
         <div
         className="absolute -top-10 -left-0.05 w-[180px] h-[220px] bg-no-repeat bg-contain z-10 pointer-events-none"
@@ -60,23 +60,25 @@ export default function ProjectSpotlights() {
             backgroundPosition: "left top",
         }}
         />
-      <div className="max-w-7xl mx-auto px-4 md:px-8 mt-12">
+      <div className="max-w-7xl mx-auto md:px-8 mt-12">
         {/* Heading */}
-        <div className="mb-10">
-          <h2 className="text-white text-4xl md:text-5xl md:ml-4 font-bold">
-            Project Spotlights
-          </h2>
+        <div className="mb-10 text-center">
+          <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">PROJECTS</h2>
+          <p className="text-3xl font-light text-gray-900">
+            Our Project Spotlights
+          </p>
+          <div className="mt-4 w-12 h-0.5 bg-gray-300 mx-auto"></div>
         </div>
 
         {/* Slider Wrapper */}
-        <div className="relative">
+        <div className="relative lg:px-8">
           {/* Prev Button */}
-          <button className="project-prev absolute left-2 md:-left-6 top-1/2 -translate-y-1/2 z-30 bg-white/10 hover:bg-lime-400 text-white  backdrop-blur-md border border-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300">
+          <button className="project-prev absolute left-2 md:-left-6 top-1/2 -translate-y-1/2 z-30 bg-brand/50 hover:bg-brand text-white  backdrop-blur-md border border-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300">
             <ChevronLeft size={24} />
           </button>
 
           {/* Next Button */}
-          <button className="project-next absolute right-2 md:-right-6 top-1/2 -translate-y-1/2 z-30 bg-white/10 hover:bg-lime-400 text-white  backdrop-blur-md border border-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300">
+          <button className="project-next absolute right-2 md:-right-6 top-1/2 -translate-y-1/2 z-30 bg-brand/50 hover:bg-brand text-white  backdrop-blur-md border border-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300">
             <ChevronRight size={24} />
           </button>
 
@@ -122,7 +124,7 @@ export default function ProjectSpotlights() {
                   </div>
 
                   {/* Content Overlay */}
-                  <div className="absolute bottom-0 left-0 w-full bg-[#2B469F]/95 border-l-4 border-b-4 border-l-lime-400 border-b-lime-400 px-6 py-5">
+                  <div className="absolute bottom-0 left-0 w-full bg-brand border-l-4 border-b-4 border-l-brand border-b-brand px-6 py-5">
                     <h3 className="text-white text-xl md:text-3xl font-bold leading-tight">
                       {project.title}
                     </h3>
